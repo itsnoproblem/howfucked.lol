@@ -2,7 +2,7 @@
 import styles from './page.module.css';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 // Dynamically import GaugeChart with no SSR to avoid hydration issues
 const GaugeChart = dynamic(() => import('react-gauge-chart'), {
@@ -12,7 +12,7 @@ const GaugeChart = dynamic(() => import('react-gauge-chart'), {
 // Define the labels grouped by level
 const labels = {
   green: [
-    "The grass is green, man!",
+    "The grass is green, man! 😎",
     "Keep calm and carry on",
     "Pretty chill actually",
     "Not too shabby",
@@ -23,15 +23,15 @@ const labels = {
     "Monopolization is on the rise",
     "Moderately concerning",
     "Somewhat alarming",
-    "Bribery is now technically legal",
+    "Bribery is now technically legal 🤢",
     "Starting to sweat"
   ],
   red: [
     "We're in trouble",
     "Time to panic",
-    "They're eating the pets!",
-    "Nazi salutes in the Capitol!",
-    "Nothing fucking matters anymore!"
+    "They're eating the pets! 😬",
+    "Nazi salutes in the Capitol! 🤮",
+    "Nothing fucking matters anymore! 😭"
   ]
 } as const;
 
@@ -63,9 +63,9 @@ export default function Home() {
   
   const getRandomPercentage = () => Math.floor(Math.random() * 101);
   
-  const updatePercentage = () => {
+  const updatePercentage = useCallback(() => {
     setPercentage(getRandomPercentage());
-  };
+  }, []);
 
   // Set isClient to true once component mounts
   useEffect(() => {
@@ -87,7 +87,7 @@ export default function Home() {
         clearInterval(updateIntervalRef.current);
       }
     };
-  }, [isClient]);
+  }, [isClient, updatePercentage]);
 
   return (
     <main className="h-screen w-screen">
@@ -110,11 +110,11 @@ export default function Home() {
               id="gauge-chart1" 
               nrOfLevels={20}
               percent={percentage / 100}
-              textColor="#ffffff"
+              hideText={true}
             />
           </div>
           {isClient && (
-            <div className="text-white text-center mt-4 text-xl">
+            <div className="text-white text-center mt-4 text-xl font-raleway">
               {getCurrentLabel(percentage.toString())}
             </div>
           )}
