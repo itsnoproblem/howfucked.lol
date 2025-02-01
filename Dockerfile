@@ -34,6 +34,8 @@ COPY --from=builder /app/public ./public
 RUN pnpm install --prod --frozen-lockfile
 
 # Set environment variables
+ARG NEXT_PUBLIC_GA_ID
+ENV NEXT_PUBLIC_GA_ID=$NEXT_PUBLIC_GA_ID 
 ENV NODE_ENV=production
 ENV PORT=8080
 
@@ -41,4 +43,4 @@ ENV PORT=8080
 EXPOSE 8080
 
 # Start the application
-CMD ["pnpm", "start"] 
+CMD ["pnpm", "start"]
