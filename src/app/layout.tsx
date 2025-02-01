@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 // Add this constant with your GA4 measurement ID
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-ZK89787R4Z';
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID || '';
 
 export const metadata: Metadata = {
   title: "howfucked.lol",
