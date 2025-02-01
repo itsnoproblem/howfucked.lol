@@ -1,5 +1,4 @@
 'use client';
-import styles from './page.module.css';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -56,10 +55,9 @@ const getCurrentLabel = (percentage: string): string => {
 };
 
 export default function Home() {
-  // Start with a fixed initial value
   const [percentage, setPercentage] = useState(40);
   const [isClient, setIsClient] = useState(false);
-  const updateIntervalRef = useRef<NodeJS.Timeout>();
+  const updateIntervalRef = useRef<NodeJS.Timeout | undefined>(undefined);
   
   const getRandomPercentage = () => Math.floor(Math.random() * 101);
   
