@@ -12,25 +12,26 @@ const GaugeChart = dynamic(() => import('react-gauge-chart'), {
 // Define the labels grouped by level
 const labels = {
   green: [
-    "We're doing fine",
+    "The grass is green, man!",
     "Keep calm and carry on",
     "Pretty chill actually",
     "Not too shabby",
-    "Relatively peaceful"
+    "We're doing fine. Everything is fine."
   ],
   yellow: [
     "Getting a bit dicey",
-    "Might want to worry",
+    "Monopolization is on the rise",
     "Moderately concerning",
     "Somewhat alarming",
+    "Bribery is now technically legal",
     "Starting to sweat"
   ],
   red: [
     "We're in trouble",
     "Time to panic",
-    "Pretty much doomed",
-    "Critical situation",
-    "Total chaos incoming"
+    "They're eating the pets!",
+    "Nazi salutes in the Capitol!",
+    "Nothing fucking matters anymore!"
   ]
 } as const;
 
