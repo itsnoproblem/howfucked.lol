@@ -88,7 +88,32 @@ export default function Home() {
             id="gauge-chart1" 
             nrOfLevels={20}
             formatTextValue={getCurrentLabel}
-            percent={percentage / 100} // GaugeChart expects a value between 0-1
+            percent={percentage / 100}
+            // Array of 20 colors transitioning from green to yellow to red
+            colors={[
+              '#22c55e', // green-500 (0-40%)
+              '#22c55e',
+              '#22c55e',
+              '#22c55e',
+              '#34d27a',
+              '#46dd96',
+              '#58e4b2',
+              '#6aebce',
+              '#eab308', // yellow transition (40-70%)
+              '#eab308',
+              '#eab308',
+              '#f59e0b',
+              '#f97316',
+              '#fb7185',
+              '#ef4444', // red-500 (70-100%)
+              '#ef4444',
+              '#ef4444',
+              '#ef4444',
+              '#ef4444',
+              '#ef4444',
+            ]}
+            textColor="#f8fafc" // slate-50
+            cornerRadius={0} // Make segments less rounded
           />
         </div>
       </div>
