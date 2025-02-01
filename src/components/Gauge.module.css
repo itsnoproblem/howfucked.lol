@@ -1,0 +1,22 @@
+.gaugeContainer {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.gauge {
+  width: 100%;
+  height: auto;
+}
+
+.gaugeLabel {
+  font-size: 14px;
+  fill: #666;
+}
+
+.gaugeValue {
+  font-size: 24px;
+  font-weight: bold;
+  fill: #333;
+} 
