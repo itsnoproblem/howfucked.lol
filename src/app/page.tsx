@@ -2,7 +2,7 @@
 import styles from './page.module.css';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // Dynamically import GaugeChart with no SSR to avoid hydration issues
 const GaugeChart = dynamic(() => import('react-gauge-chart'), {
@@ -55,41 +55,68 @@ const getCurrentLabel = (percentage: string): string => {
 };
 
 export default function Home() {
-  const [percentage, setPercentage] = useState(50);
-
-  useEffect(() => {
-    const getRandomPercentage = () => Math.floor(Math.random() * 101);
-    
-    // Set initial random value
+  // Start with a fixed initial value
+  const [percentage, setPercentage] = useState(40);
+  const [isClient, setIsClient] = useState(false);
+  const updateIntervalRef = useRef<NodeJS.Timeout>();
+  
+  const getRandomPercentage = () => Math.floor(Math.random() * 101);
+  
+  const updatePercentage = () => {
     setPercentage(getRandomPercentage());
+  };
 
-    // Update every 10 seconds
-    const interval = setInterval(() => {
-      setPercentage(getRandomPercentage());
-    }, 10000);
-
-    // Cleanup interval on component unmount
-    return () => clearInterval(interval);
+  // Set isClient to true once component mounts
+  useEffect(() => {
+    setIsClient(true);
   }, []);
 
+  // Only start the interval after initial client-side render
+  useEffect(() => {
+    if (!isClient) return;
+    
+    // Set initial random value
+    updatePercentage();
+
+    // Update every 10 seconds
+    updateIntervalRef.current = setInterval(updatePercentage, 10000);
+
+    return () => {
+      if (updateIntervalRef.current) {
+        clearInterval(updateIntervalRef.current);
+      }
+    };
+  }, [isClient]);
+
   return (
-    <main className={styles.main}>
-      <div className="grid grid-cols-1 md:grid-cols-3 h-screen w-screen">
-        <div className="col-span-1 md:col-span-2 bg-stone-50 text-stone-950 flex items-center justify-center">
+    <main className="h-screen w-screen">
+      <div className="grid grid-cols-1 md:grid-cols-3 h-full">
+        <div 
+          className="col-span-1 md:col-span-2 bg-white dark:bg-stone-50 flex items-center justify-center p-8 cursor-pointer" 
+          onClick={updatePercentage}
+        >
           <Image
             src="/howfucked.svg"
             alt="how fucked is the world, really?"
             width={419}
             height={163}
+            priority
           />
         </div>
-        <div className="bg-stone-950 text-stone-50 flex items-center justify-center">
-          <GaugeChart 
-            id="gauge-chart1" 
-            nrOfLevels={20}
-            formatTextValue={getCurrentLabel}
-            percent={percentage / 100} // GaugeChart expects a value between 0-1
-          />
+        <div className="bg-black dark:bg-stone-950 flex flex-col items-center justify-center p-8">
+          <div className="w-full max-w-md">
+            <GaugeChart 
+              id="gauge-chart1" 
+              nrOfLevels={20}
+              percent={percentage / 100}
+              textColor="#ffffff"
+            />
+          </div>
+          {isClient && (
+            <div className="text-white text-center mt-4 text-xl">
+              {getCurrentLabel(percentage.toString())}
+            </div>
+          )}
         </div>
       </div>
     </main>
