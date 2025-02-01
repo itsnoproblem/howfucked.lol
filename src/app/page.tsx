@@ -74,8 +74,8 @@ export default function Home() {
 
   return (
     <main className={styles.main}>
-      <div className="grid grid-cols-3 h-screen w-screen">
-        <div className="col-span-2 bg-stone-50 text-stone-950 flex items-center justify-center">
+      <div className="grid grid-cols-1 md:grid-cols-3 h-screen w-screen">
+        <div className="col-span-1 md:col-span-2 bg-stone-50 text-stone-950 flex items-center justify-center">
           <Image
             src="/howfucked.svg"
             alt="how fucked is the world, really?"
